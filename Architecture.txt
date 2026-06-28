@@ -1,0 +1,24 @@
+                Client (Postman / Frontend)
+                          │
+                     HTTP Request
+                          │
+                          ▼
+                  +----------------+
+                  |   Controller   |
+                  +----------------+
+                          │
+                          ▼
+                  +----------------+
+                  |    Service     |
+                  | Business Logic |
+                  +----------------+
+                    │          │
+                    │          │
+          PostgreSQL│          │Redis
+                    ▼          ▼
+            +-------------+  +-------------+
+            | Repository  |  | Hold Logic  |
+            +-------------+  +-------------+
+                    │
+                    ▼
+               PostgreSQL
