@@ -10,6 +10,17 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+//Checks duplicate email
+//
+//Encrypts password
+//
+//Creates User entity
+//
+//Saves user
+//
+//Builds SignupResponse
+//
+//Returns it
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
@@ -46,7 +57,15 @@ public class UserServiceImpl implements UserService {
                 .password(encodedPassword)
                 .role(Role.USER)  //Every new signup gets the USER role. Only an admin should be able to create ADMIN users later.
                 .build(); //This actually creates the User object.
-        return null;
+        User savedUser = userRepository.save(user); //userRepository.save(user) persists the entity.
+
+        //we are not returning user object. rather we return a DTO
+        return SignupResponse.builder()
+                .id(savedUser.getId())
+                .name(savedUser.getName())
+                .email(savedUser.getEmail())
+                .message("User registered successfully.")
+                .build();
 
     }
 }
