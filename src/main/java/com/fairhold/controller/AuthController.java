@@ -31,7 +31,7 @@ import org.springframework.web.bind.annotation.RequestBody; //Take the JSON requ
 //@RestController is used for REST APIs because it automatically serializes returned objects into JSON.
 // @Controller is primarily used for rendering server-side views.
 @RequiredArgsConstructor
-public class AutoController {
+public class AuthController {
     private final UserService userService;
 
     @PostMapping("/signup") //@PostMapping("/signup") -> /api/auth/signup

@@ -4,6 +4,7 @@ import com.fairhold.dto.request.SignupRequest;
 import com.fairhold.dto.response.SignupResponse;
 import com.fairhold.entity.Role;
 import com.fairhold.entity.User;
+import com.fairhold.exception.EmailAlreadyExistsException;
 import com.fairhold.repository.UserRepository;
 import com.fairhold.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -39,7 +40,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public SignupResponse registerUser(SignupRequest request) {
         if (userRepository.existsByEmail(request.getEmail())) {
-            throw new RuntimeException("Email already exists");
+            throw new EmailAlreadyExistsException("Email already exists");
         }
         String encodedPassword = passwordEncoder.encode(request.getPassword());
 
