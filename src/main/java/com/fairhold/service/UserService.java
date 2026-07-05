@@ -1,6 +1,8 @@
 package com.fairhold.service;
 
+import com.fairhold.dto.request.LoginRequest;
 import com.fairhold.dto.request.SignupRequest;
+import com.fairhold.dto.response.LoginResponse;
 import com.fairhold.dto.response.SignupResponse;
 
 //Service contains the business logic i,e,.
@@ -22,5 +24,7 @@ import com.fairhold.dto.response.SignupResponse;
 public interface UserService {
 
     SignupResponse registerUser(SignupRequest request);
+
+    LoginResponse loginUser(LoginRequest request);
 
 }

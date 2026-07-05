@@ -1,10 +1,13 @@
 package com.fairhold.service.impl;
 
+import com.fairhold.dto.request.LoginRequest;
 import com.fairhold.dto.request.SignupRequest;
+import com.fairhold.dto.response.LoginResponse;
 import com.fairhold.dto.response.SignupResponse;
 import com.fairhold.entity.Role;
 import com.fairhold.entity.User;
 import com.fairhold.exception.EmailAlreadyExistsException;
+import com.fairhold.exception.InvalidCredentialsException;
 import com.fairhold.repository.UserRepository;
 import com.fairhold.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -68,5 +71,24 @@ public class UserServiceImpl implements UserService {
                 .message("User registered successfully.")
                 .build();
 
+    }
+
+    @Override
+    public LoginResponse loginUser(LoginRequest request) {
+
+        User user = userRepository.findByEmail(request.getEmail())
+                .orElseThrow(() -> new InvalidCredentialsException("Invalid email or password"));
+
+        if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
+            throw new InvalidCredentialsException("Invalid email or password");
+        }
+
+        return LoginResponse.builder()
+                .id(user.getId())
+                .name(user.getName())
+                .email(user.getEmail())
+                .role(user.getRole().name())
+                .message("Login successful.")
+                .build();
     }
 }

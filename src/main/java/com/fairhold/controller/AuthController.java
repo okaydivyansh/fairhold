@@ -6,6 +6,8 @@
 
 package com.fairhold.controller;
 
+import com.fairhold.dto.request.LoginRequest;
+import com.fairhold.dto.response.LoginResponse;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.fairhold.service.UserService;
@@ -43,5 +45,14 @@ public class AuthController {
 
         return ResponseEntity.status(HttpStatus.CREATED)  //A new resource has been created.
                 .body(response);  //This sets the HTTP response body.
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<LoginResponse> login(
+            @Valid @RequestBody LoginRequest request) {
+
+        LoginResponse response = userService.loginUser(request);
+
+        return ResponseEntity.ok(response);
     }
 }
