@@ -10,6 +10,7 @@ import com.fairhold.exception.EmailAlreadyExistsException;
 import com.fairhold.exception.InvalidCredentialsException;
 import com.fairhold.repository.UserRepository;
 import com.fairhold.service.UserService;
+import com.fairhold.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -30,6 +31,7 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JwtUtil jwtUtil;
 
     //without lombok
 //    private final UserRepository userRepository;
@@ -82,12 +84,14 @@ public class UserServiceImpl implements UserService {
         if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
             throw new InvalidCredentialsException("Invalid email or password");
         }
+        String token = jwtUtil.generateToken(user);
 
         return LoginResponse.builder()
                 .id(user.getId())
                 .name(user.getName())
                 .email(user.getEmail())
                 .role(user.getRole().name())
+                .token(token)
                 .message("Login successful.")
                 .build();
     }
