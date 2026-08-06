@@ -11,6 +11,12 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
+//APIs
+//POST  /api/bookings/confirm
+//GET   /api/bookings/user/{userId}
+//PATCH /api/bookings/{bookingId}/cancel
+
 @RestController
 @RequestMapping("/api/bookings")
 @RequiredArgsConstructor
@@ -33,6 +39,15 @@ public class BookingController {
             @PathVariable Long userId) {
 
         List<BookingResponse> response = bookingService.getBookingsByUser(userId);
+
+        return ResponseEntity.ok(response);
+    }
+
+    @PatchMapping("/{bookingId}/cancel")
+    public ResponseEntity<BookingResponse> cancelBooking(
+            @PathVariable Long bookingId) {
+
+        BookingResponse response = bookingService.cancelBooking(bookingId);
 
         return ResponseEntity.ok(response);
     }

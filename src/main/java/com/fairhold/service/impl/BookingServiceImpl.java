@@ -101,4 +101,27 @@ public class BookingServiceImpl implements BookingService {
                 .message(message)
                 .build();
     }
+
+    @Override
+    @Transactional
+    public BookingResponse cancelBooking(Long bookingId) {
+
+        Booking booking = bookingRepository.findById(bookingId)
+                .orElseThrow(() -> new BookingNotFoundException("Booking not found"));
+
+        if (booking.getStatus() == BookingStatus.CANCELLED) {
+            return mapToResponse(booking, "Booking is already cancelled.");
+        }
+
+        booking.setStatus(BookingStatus.CANCELLED);
+
+        Slot slot = booking.getSlot();
+        slot.setAvailable(true);
+
+        slotRepository.save(slot);
+
+        Booking savedBooking = bookingRepository.save(booking);
+
+        return mapToResponse(savedBooking, "Booking cancelled successfully.");
+    }
 }
