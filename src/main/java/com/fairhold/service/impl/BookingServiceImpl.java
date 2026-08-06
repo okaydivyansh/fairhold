@@ -80,6 +80,15 @@ public class BookingServiceImpl implements BookingService {
                 .toList();
     }
 
+    @Override
+    public List<BookingResponse> getAllBookings() {
+
+        return bookingRepository.findAll()
+                .stream()
+                .map(booking -> mapToResponse(booking, "Booking fetched successfully."))
+                .toList();
+    }
+
     private String buildHoldKey(Long slotId) {
         return "hold:slot:" + slotId;
     }
@@ -124,4 +133,5 @@ public class BookingServiceImpl implements BookingService {
 
         return mapToResponse(savedBooking, "Booking cancelled successfully.");
     }
+
 }

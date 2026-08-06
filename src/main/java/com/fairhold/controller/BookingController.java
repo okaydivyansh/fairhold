@@ -14,6 +14,7 @@ import java.util.List;
 
 //APIs
 //POST  /api/bookings/confirm
+//GET   /api/bookings
 //GET   /api/bookings/user/{userId}
 //PATCH /api/bookings/{bookingId}/cancel
 
@@ -48,6 +49,14 @@ public class BookingController {
             @PathVariable Long bookingId) {
 
         BookingResponse response = bookingService.cancelBooking(bookingId);
+
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<BookingResponse>> getAllBookings() {
+
+        List<BookingResponse> response = bookingService.getAllBookings();
 
         return ResponseEntity.ok(response);
     }
