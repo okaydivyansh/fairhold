@@ -36,6 +36,14 @@ public class SlotController {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping("/available")
+    public ResponseEntity<List<SlotResponse>> getAvailableSlots() {
+
+        List<SlotResponse> response = slotService.getAvailableSlots();
+
+        return ResponseEntity.ok(response);
+    }
+
     @GetMapping("/resource/{resourceId}")
     public ResponseEntity<List<SlotResponse>> getSlotsByResourceId(
             @PathVariable Long resourceId) {

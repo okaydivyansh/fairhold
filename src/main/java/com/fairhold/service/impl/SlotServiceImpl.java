@@ -61,6 +61,15 @@ public class SlotServiceImpl implements SlotService {
                 .toList();
     }
 
+    @Override
+    public List<SlotResponse> getAvailableSlots() {
+
+        return slotRepository.findByAvailableTrue()
+                .stream()
+                .map(this::mapToResponse)
+                .toList();
+    }
+
     private SlotResponse mapToResponse(Slot slot) {
 
         return SlotResponse.builder()

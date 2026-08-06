@@ -8,4 +8,6 @@ import java.util.List;
 public interface SlotRepository extends JpaRepository<Slot, Long> {
 //Find all slots where slot.resource.id = resourceId
     List<Slot> findByResourceId(Long resourceId);
+//SELECT * FROM slots WHERE available = true;
+    List<Slot> findByAvailableTrue();
 }

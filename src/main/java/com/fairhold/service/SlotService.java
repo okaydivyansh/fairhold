@@ -12,4 +12,6 @@ public interface SlotService {
     List<SlotResponse> getAllSlots();
 
     List<SlotResponse> getSlotsByResourceId(Long resourceId);
+
+    List<SlotResponse> getAvailableSlots();
 }
